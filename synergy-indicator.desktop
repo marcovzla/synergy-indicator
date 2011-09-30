@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=synergy-indicator.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=synergy-indicator
+Comment=Manage synergy
