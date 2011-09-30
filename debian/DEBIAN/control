@@ -1,0 +1,10 @@
+Package: synergy-indicator
+Version: 0.1-1
+Section: base
+Priority: optional
+Architecture: all
+Depends: synergy (>= 1.3.6)
+Maintainer: Marco Antonio Valenzuela Escárcega <marcos.vzla@gmail.com>
+Description: Synergy indicator.
+ This indicator allows you to start and stop synergys with different
+ configurations.

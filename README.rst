@@ -4,4 +4,6 @@ synergy-indicator
 An indicator for ubuntu, useful for starting and stopping
 ``synergys`` with different configurations.
 
-Note: ``synergy-indicator.png`` must be in ``/usr/share/icons``.
+To make deb package run ``makedeb.sh``.
+
+To install run ``dpkg -i ./synergy-indicator_0.1-1_all.deb``.
