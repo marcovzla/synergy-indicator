@@ -35,6 +35,20 @@ import appindicator
 # absolute path to profiles directory
 PROFILES_DIR = os.path.expanduser('~/.synergy-indicator')
 
+# absolute path to autorun file
+AUTORUN_FILE = os.path.expanduser(
+    '~/.config/autostart/synergy-indicator.desktop')
+
+AUTORUN_DATA = """
+[Desktop Entry]
+Type=Application
+Exec=synergy-indicator.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=synergy-indicator
+Comment=Manage synergy
+"""
 
 class SynergyIndicator(object):
     def __init__(self):
@@ -84,6 +98,12 @@ class SynergyIndicator(object):
             submenu.append(item)
         self.profiles_item.set_submenu(submenu)
 
+        # menuitem to toggle autorun
+        autorun_item = gtk.CheckMenuItem('Automatically start at login')
+        if os.path.exists(AUTORUN_FILE):
+            autorun_item.set_active(True)
+        autorun_item.connect('activate', self.toggle_autorun)
+
         # menuitem to quit
         quit_item = gtk.MenuItem('Quit')
         quit_item.connect('activate', self.quit)
@@ -97,6 +117,8 @@ class SynergyIndicator(object):
         menu.append(self.server_item)
         menu.append(gtk.SeparatorMenuItem())
         menu.append(self.profiles_item)
+        menu.append(gtk.SeparatorMenuItem())
+        menu.append(autorun_item)
         menu.append(gtk.SeparatorMenuItem())
         menu.append(quit_item)
         menu.show_all()
@@ -152,6 +174,13 @@ class SynergyIndicator(object):
             self.stop_server()
         else:
             self.start_server()
+
+    def toggle_autorun(self, widget):
+        if widget.active:
+            with open(AUTORUN_FILE, 'w') as autorun:
+                autorun.write(AUTORUN_DATA)
+        else:
+            os.remove(AUTORUN_FILE)
 
     def quit(self, widget):
         self.stop_server()
