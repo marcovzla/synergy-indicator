@@ -32,7 +32,7 @@ import gtk
 import appindicator
 
 
-ICON_FILE = '/usr/share/icons/synergy-indicator.png'
+# absolute path to profiles directory
 PROFILES_DIR = os.path.expanduser('~/.synergy-indicator')
 
 
@@ -41,11 +41,11 @@ class SynergyIndicator(object):
         self.conf = None
         self.server_running = False
         self.client_running = False
-        
-        self.indicator = appindicator.Indicator(
-            'synergy-indicator', ICON_FILE,
-            appindicator.CATEGORY_APPLICATION_STATUS)
 
+        # create the app indicator
+        self.indicator = appindicator.Indicator(
+            'synergy-indicator', 'synergy-indicator',
+            appindicator.CATEGORY_APPLICATION_STATUS)
         self.indicator.set_status(appindicator.STATUS_ACTIVE)
         self.indicator.set_attention_icon('indicator-messages-new')
         
@@ -130,6 +130,11 @@ class SynergyIndicator(object):
             self.stop_server()
             self.start_server()
 
+    
+    #####################
+    ## signal handlers ##
+    #####################
+    
     def select_profile(self, widget):
         self.conf = None
         for m in widget.get_group():
