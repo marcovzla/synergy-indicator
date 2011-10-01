@@ -133,10 +133,10 @@ class SynergyIndicator(object):
         gtk.main()
 
     def start_server(self):
-        args = ['synergys']
+        server = ['synergys']
         if self.conf:
-            args += ['-c', self.conf]
-        subprocess.call(args)
+            server += ['-c', self.conf]
+        subprocess.call(server)
         self.server_running = True
         self.server_status.show()
         self.server_item.set_label('Stop Synergy Server')
@@ -146,12 +146,6 @@ class SynergyIndicator(object):
         self.server_running = False
         self.server_status.hide()
         self.server_item.set_label('Start Synergy Server')
-
-    def restart_server(self):
-        if self.server_running:
-            self.stop_server()
-            self.start_server()
-
     
     #####################
     ## signal handlers ##
@@ -163,7 +157,9 @@ class SynergyIndicator(object):
             label = m.get_label()
             if m.active and label != 'default':
                 self.conf = os.path.join(PROFILES_DIR, '%s.conf' % label)
-                self.restart_server()
+                if self.server_running:
+                    self.stop_server()
+                    self.start_server()
                 self.profile_status.set_label('Profile: %s' % label)
                 self.profile_status.show()
                 return
@@ -197,3 +193,4 @@ def kill(pattern):
 if __name__ == '__main__':
     indicator = SynergyIndicator()
     indicator.main()
+
