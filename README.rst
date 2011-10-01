@@ -17,8 +17,8 @@ installation
 
 To make a deb package run::
 
-  $ ./makedeb.sh
+  $ dpkg-deb --build synergy-indicator
 
 To install run::
 
- $ dpkg -i ./synergy-indicator_0.1-1_all.deb
+ $ dpkg -i ./synergy-indicator.deb
