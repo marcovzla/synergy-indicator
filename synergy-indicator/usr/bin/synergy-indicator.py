@@ -24,7 +24,6 @@
 
 import os
 import glob
-import signal
 import socket
 import subprocess
 
@@ -54,7 +53,6 @@ class SynergyIndicator(object):
     def __init__(self):
         self.conf = None
         self.server_running = False
-        self.client_running = False
 
         # create the app indicator
         self.indicator = appindicator.Indicator(
